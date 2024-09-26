@@ -62,8 +62,8 @@ const Navigation = () => {
               py: "15px",
               bgcolor: "#1d9bf0",
             }}
-            variations="contained"
-          >
+            variant="contained"
+            >
             Tweet
           </Button>
         </div>

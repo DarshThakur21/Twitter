@@ -16,7 +16,7 @@ const HomePage = () => {
       </Grid>
 
       {/* middle feed portion */}
-      <Grid item xs={12} lg={6} className='w-full relative  '>
+      <Grid item xs={12} lg={6} className='w-full relative '>
         {/* <p className='text-center'>middle part</p> */}
         <HomeSection/>
       </Grid>
