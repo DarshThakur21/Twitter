@@ -4,6 +4,7 @@ import '../../index.css';
 import 'tailwindcss/tailwind.css';
 import Navigation from '../Navigation/Navigation';
 import HomeSection from '../HomeSection/HomeSection';
+import RightPart from '../RightPart/RightPart';
 
 const HomePage = () => {
   return (
@@ -16,15 +17,16 @@ const HomePage = () => {
       </Grid>
 
       {/* middle feed portion */}
-      <Grid item xs={12} lg={6} className='w-full relative '>
+      <Grid item xs={12} lg={6} className='px-5 lg:px-9  hidden lg:block w-full relative '>
         {/* <p className='text-center'>middle part</p> */}
         <HomeSection/>
       </Grid>
 
       
 
-      <Grid item xs={0} lg={3} className='hidden lg:block w-full relative'>
-        <p className='text-center'>right part</p>
+      <Grid item xs={0} lg={3} className='hidden lg:block w-full relative  '>
+        
+        <RightPart/>
 
       </Grid>
     </Grid>

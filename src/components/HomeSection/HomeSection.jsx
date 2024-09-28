@@ -49,8 +49,8 @@ const HomeSection = () => {
   return (
     <div className='space-y-5'>
 
-      <section>
-        <h1 className='py-5 text-xl font-bold opacity-90' > home</h1>
+      <section  >
+        <h1 className='py-5 text-xl font-bold opacity-90' > Home page</h1>
       </section>
 
       <section className={`pb-10`} >
@@ -108,8 +108,9 @@ const HomeSection = () => {
 
       </section>
 
-      <section  >
-        <TweetCard/>
+      <section   >
+        {[1,1,1,1,1].map((item)=><TweetCard/>)}
+         
             
       </section>
 
