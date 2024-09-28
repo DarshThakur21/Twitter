@@ -106,7 +106,7 @@ export default function TweetCard() {
                     </div>
 
                     <div className='mt-2'>
-                        <div className='cursor-pointer   '>
+                        <div  onClick={()=>navigate(`/tweet/${2}`)} className='cursor-pointer' >
                             <p className='mb-2 p-0'>Hello people on twitter yada yada yadadasdasdas</p>
                             <img className=' w-[28rem]  border border-gray-400 p-5 rounded-md' src="https://i.pinimg.com/564x/c1/17/d5/c117d595dba0901578e35a2d82775ee8.jpg" alt="" />
                         </div>
