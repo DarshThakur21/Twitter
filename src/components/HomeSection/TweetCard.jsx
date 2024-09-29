@@ -8,6 +8,7 @@ import RepeatIcon from '@mui/icons-material/Repeat';
 import { Avatar, Button, Menu, MenuItem } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ReplyModal from './ReplyModal';
 
 // import RepeatIcon from '@mui/icons-material/Repeat';
 
@@ -51,8 +52,17 @@ export default function TweetCard() {
         setIsLiked(!isLiked);
     }
 
+
+    // for the reply modal
+
+    const [openReplyModal, setOpenReplyModal] = useState(false);
+
+
+    const handleopenReplyModal = () => setOpenReplyModal(true);
+    const handleCloseReplyModal = () => setOpenReplyModal(false);
+
     return (
-        <div className=''>
+        <React.Fragment className=''>
             {/* <div className='flex items-center font-semibold text-gray-500 py-2'>
             <RepeatIcon/>
             <p>your tweet</p>
@@ -107,14 +117,14 @@ export default function TweetCard() {
 
                     <div className='mt-2'>
                         {/* onClick={()=>navigate(`/tweet/${2}`)} used this to implement the redirecting of the tweet  */}
-                        <div  onClick={()=>navigate(`/tweet/${2}`)} className='cursor-pointer' >
+                        <div onClick={() => navigate(`/tweet/${2}`)} className='cursor-pointer' >
                             <p className='mb-2 p-0'>Hello people on twitter yada yada yadadasdasdas</p>
                             <img className=' w-[28rem]  border border-gray-400 p-5 rounded-md' src="https://i.pinimg.com/564x/c1/17/d5/c117d595dba0901578e35a2d82775ee8.jpg" alt="" />
                         </div>
 
                         <div className='py-5 flex flex-wrap justify-between items-center  '>
                             <div className='space-x-2 flex items-center text-gray-600  '>
-                                <ChatBubbleOutlineIcon className='cursor-pointer' onClick={handleOpenReplyModel} />
+                                <ChatBubbleOutlineIcon className='cursor-pointer' onClick={handleopenReplyModal} />
                                 <p>40</p>
                             </div>
 
@@ -150,6 +160,12 @@ export default function TweetCard() {
             </div>
 
 
-        </div>
+            {/* implementing the chat function in the tweet scroll area and icon intergration */}
+            <section>
+                <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal}/>
+
+            </section>
+
+        </React.Fragment>
     )
 }

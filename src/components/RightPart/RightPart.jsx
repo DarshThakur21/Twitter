@@ -3,9 +3,17 @@ import SearchIcon from '@mui/icons-material/Search';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { Button } from '@mui/material';
 import MoreHoriz from '@mui/icons-material/MoreHoriz';
+import SubscriptionModal from '../../SubscriptionModal/SubscriptionModal';
 
 
 export default function RightPart() {
+
+
+        // closing the verfication button
+          const [openSubModal, setOpenSubModal] = React.useState(false);
+    const handleOpenSubModal = () => setOpenSubModal(true);
+    const handleCloseSubModal = () => setOpenSubModal(false);
+
 
 
 
@@ -32,12 +40,16 @@ export default function RightPart() {
                 <h1 className='my-2 font-bold'>Sub to get new features</h1>
                 <Button variant='contained'
                     sx={{ padding: "10px", paddingX: "20px", borderRadius: "25px", marginLeft: "2px" }}
+                    onClick={handleOpenSubModal}
                 >
+
                     Get Verified
                 </Button>
 
 
             </section>
+
+
 
             {/* trendind topic section */}
             <section className='mt-7 space-y-5' >
@@ -57,6 +69,9 @@ export default function RightPart() {
 
 
                 </div>)}
+            </section>
+            <section>
+                <SubscriptionModal open={openSubModal} handleClose={handleCloseSubModal} />
             </section>
 
         </div>
