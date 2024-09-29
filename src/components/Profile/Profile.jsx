@@ -8,10 +8,15 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import TweetCard from '../HomeSection/TweetCard';
+import ProfileModal from './ProfileModal';
 
 export default function Profile() {
   const [tabValue,setTabValue]=useState("1");
+  const [openProfileModal,setOpenProfileModal]=useState(false);
 
+
+  const handleopenProfileModal = () => setOpenProfileModal(true);
+  const handleClose = () => setOpenProfileModal(false);
 
   const handleChange=(event ,newValue)=>{
     setTabValue(newValue)
@@ -27,10 +32,11 @@ export default function Profile() {
   const navigate = useNavigate();
 
   
-  const handleOpenProfile = () => {
-    console.log("handleOpenProfile")
+  // const handleOpenProfile = () => {
+  //   console.log("handleOpenProfile")
+    
 
-  }
+  // }
 
   const handleFollowUser = () => {
 
@@ -42,7 +48,7 @@ export default function Profile() {
 
   return (
     <div>
-      <section className={`z-50 flex items-center sticky top-0 bg-opacity-95`}>
+      <section className={`bg-white z-50 flex items-center sticky top-0 bg-opacity-95`}>
         <KeyboardBackspaceIcon className='cursor-pointer' onClick={handleBack} />
 
         <h1 className='py-5 text-xl font-bold opacity-90 ml-5'>Darsh Thakur</h1>
@@ -68,7 +74,7 @@ export default function Profile() {
           {/* handling the edit profile section */}
           {true ? (<Button className='rounded-full' variant='contained'
             sx={{ borderRadius: "20px" }}
-            onClick={handleOpenProfile}
+            onClick={handleopenProfileModal}
           >
             Edit profile
           </Button>) : (<Button className='rounded-full' variant='contained'
@@ -156,6 +162,9 @@ export default function Profile() {
     </Box>
       </section>
 
+              <section>
+                <ProfileModal  handleClose={handleClose} open={openProfileModal} />
+              </section>
 
     </div>
   )

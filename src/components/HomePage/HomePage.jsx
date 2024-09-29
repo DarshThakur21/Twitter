@@ -19,6 +19,7 @@ const HomePage = () => {
         <Navigation />
       </Grid>
 
+
       {/* middle feed portion */}
       <Grid item xs={12} lg={6} className='px-5 lg:px-9  hidden lg:block w-full relative '>
         {/* <p className='text-center'>middle part</p> */}
