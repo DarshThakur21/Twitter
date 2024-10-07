@@ -3,7 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { Button } from '@mui/material';
 import MoreHoriz from '@mui/icons-material/MoreHoriz';
-import SubscriptionModal from '../../SubscriptionModal/SubscriptionModal';
+import SubscriptionModal from '../SubscriptionModal/SubscriptionModal';
 
 
 export default function RightPart() {
