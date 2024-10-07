@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 const style = {
-    position: 'absolute',
+    position: 'absolute', 
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
