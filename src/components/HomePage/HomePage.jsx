@@ -26,7 +26,6 @@ const HomePage = () => {
 
         <Routes>
           <Route path='/' element={<HomeSection />}></Route>
-          {/* <Route path='/' element={<Authntica />}></Route> */}
           <Route path='/home' element={<HomeSection />}></Route>
           <Route path="/profile/:id" element={<Profile />}></Route>
           <Route path="/tweet/:id" element={<TweetDetail />}></Route>

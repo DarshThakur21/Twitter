@@ -1,22 +1,23 @@
 import axios from "axios"
 import { API_BASE_URL } from "../../config/api"
-import { GET_USER_PROFILE_FAILURE, GET_USER_PROFILE_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS } from "./ActionType"
+import { GET_USER_PROFILE_FAILURE, GET_USER_PROFILE_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT, REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS } from "./ActionType"
 
-export const loginUser=(loginData)=>async(dispatch)=>{
+export const loginUser = (loginData) => async (dispatch) => {
+    console.log("Login Data:", loginData);
     try {
-        const {data}=await axios.post(`${API_BASE_URL}/auth/signin`,loginData)
+        const { data } = await axios.post(`${API_BASE_URL}/auth/signin`, loginData);
+        console.log("Logged in user:", data);
 
-        if(data.jwt){
-            localStorage.setItem("jwt",data.jwt)
+        if (data.jwt) {
+            localStorage.setItem("jwt", data.jwt);
         }
-        dispatch({type:LOGIN_USER_SUCCESS,payload:data.jwt})
+        dispatch({ type: LOGIN_USER_SUCCESS, payload: data.jwt });
     } catch (error) {
-        console.log("error",error);
-        dispatch({type:LOGIN_USER_FAILURE,payload:error.message})
-
+        console.error("Login error:", error.response ? error.response.data : error.message);
+        dispatch({ type: LOGIN_USER_FAILURE, payload: error.message });
     }
+};
 
-}
 
 
 // setting up the registeration api intercom 
@@ -24,10 +25,17 @@ export const loginUser=(loginData)=>async(dispatch)=>{
 
 export const registerUser=(registerData)=>async(dispatch)=>{
     try {
-        const {data}=await axios.post(`${API_BASE_URL}/auth/signup`,registerData)
+        console.log("Register Data:", registerData);
+        const {data}=await axios.post(`${API_BASE_URL}/auth/signup`,registerData,{
+            headers: {
+              'Content-Type': 'application/json', // Ensure the correct content type is set
+            },
+          });
+        console.log("singup user",data)
 
         if(data.jwt){
             localStorage.setItem("jwt",data.jwt)
+            // dispatch(getUserProfile(data.jwt));
         }
         dispatch({type:REGISTER_USER_SUCCESS,payload:data.jwt})
     } catch (error) {
@@ -57,4 +65,14 @@ export const getUserProfile=(jwt)=>async(dispatch)=>{
 
     }
 
+}
+
+
+export const logout=()=>async(dispatch)=>{
+   
+       localStorage.removeItem("jwt")
+
+        
+        dispatch({type:LOGOUT,payload:null})
+      
 }
