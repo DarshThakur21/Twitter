@@ -1,26 +1,47 @@
-import { Avatar } from '@mui/material';
+import FmGoodIcon from '@mui/icons-material/FmdGood';
+import ImageIcon from '@mui/icons-material/Image';
+import TagFacesIcon from '@mui/icons-material/TagFaces';
+import { Avatar, Button } from '@mui/material';
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
-import { Button } from '@mui/material';
-import ImageIcon from '@mui/icons-material/Image'
-import FmGoodIcon from '@mui/icons-material/FmdGood'
-import TagFacesIcon from '@mui/icons-material/TagFaces'
+import React, { useEffect, useState } from 'react';
 
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+import { createTweet, getAllTweets } from '../../Store/Tweet/Action';
+import { UploadToCloud } from '../../Util/UploadToCloud';
 import TweetCard from './TweetCard';
 
 const HomeSection = () => {
   const [uploadImage, setUploadImage] = useState(false);
   const [selectImage, setselectImage] = useState("");
+  const dispatch=useDispatch();
+  const {tweet}=useSelector((Store)=>Store);
+  console.log("tweet", tweet)
+
+
 
   const validationSchema = Yup.object().shape({
     content: Yup.string().required("tweet text is required")
   })
 
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values,actions) => {
+    const formData = new FormData();
+  formData.append('content', values.content);
+  if (values.image) formData.append('image', values.image); // Include image if provided
+
+  dispatch(createTweet(formData)); // Dispatch the action to create a tweet
+  actions.resetForm()
+  
+
     console.log("values", values)
+    setselectImage("null")
   }
+
+
+  useEffect(()=>{
+    dispatch(getAllTweets())
+  },[tweet.like,tweet.retweet])
 
 
 
@@ -35,11 +56,11 @@ const HomeSection = () => {
   })
 
 
-  const handleSelectImage = (event) => {
+  const handleSelectImage = async(event) => {
     setUploadImage(true);
-    const imgUrl = event.target.files[0]
+    const imgUrl = await UploadToCloud(event.target.files[0])
     formik.setFieldValue("image", imgUrl);
-    setselectImage(imgUrl);
+    setselectImage( imgUrl);
     setUploadImage(false);
 
   }
@@ -82,7 +103,7 @@ const HomeSection = () => {
                   </label>
                   <FmGoodIcon className='text-[#1d9bf0]' />
                   <TagFacesIcon className='text-[#1d9bf0]' />
-                </div>
+                
                 <Button sx={{
                   width: "20%",
                   borderRadius: "20px",
@@ -96,11 +117,13 @@ const HomeSection = () => {
                   Tweet
                 </Button>
 
-
+                </div>
               </div>
 
             </form>
-
+                <div>
+                  {selectImage &&  <img src={selectImage} alt="" />}
+                </div>
           </div>
 
 
@@ -109,7 +132,7 @@ const HomeSection = () => {
       </section>
 
       <section   >
-        {[1,1,1,1,1].map((item)=><TweetCard/>)}
+        {tweet.tweets?.map((item)=><TweetCard item={item} />)}
          
             
       </section>

@@ -11,7 +11,7 @@ import { logout } from "../../Store/Auth/Action";
 
 const Navigation = () => {
 
-  const {auth}=useSelector(Store=>Store)
+  const {auth}=useSelector((Store)=>Store)
 
   const navigate = useNavigate();
 
@@ -58,7 +58,7 @@ const Navigation = () => {
               className="cursor-pointer flex space-x-3 items-center"
               onClick={() =>
                 item.title === "Profile"
-                  ? navigate(`/profile/${6}`)
+                  ? navigate(`/profile/${auth.user?.id}`)
                   : navigate(item.path)
               }
             >

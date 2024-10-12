@@ -71,7 +71,7 @@ export const getUserProfile=(jwt)=>async(dispatch)=>{
 export const findUserById=(userId)=>async(dispatch)=>{
     try {
         const {data}=await  api.get(`/api/users/${userId}`);
-
+            console.log("user",data)
         dispatch({type:FIND_USER_BY_ID_SUCCESS,payload:data})
     } catch (error) {
         console.log("error",error);

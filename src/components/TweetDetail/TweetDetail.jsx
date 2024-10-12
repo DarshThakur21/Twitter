@@ -1,17 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import TweetCard from '../HomeSection/TweetCard';
 import { Divider } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 
-function TweetDetail() {
+import { findTweetsById, replyTweet } from '../../Store/Tweet/Action';
+import { Store } from '../../Store/Store';
+ 
+ 
+
+const TweetDetail=()=> {
 
     const navigate = useNavigate();
     const handleBack = () => navigate(-1);
+    const dispatch=useDispatch()
+
+    const {id}=useParams()
+    const {tweet}=useSelector((Store)=>Store)
+    // const tweet = useSelector((state) => state.tweet.tweet) || {};
 
 
+    useEffect(()=>{
+        if(id){
+            dispatch(findTweetsById(id))
+        }
+    },[id])
 
 
+    const replies = tweet.replyTweet || [];
     return (
         <React.Fragment >
 
@@ -22,13 +39,21 @@ function TweetDetail() {
 
             </section>
             <section>
-                <TweetCard />
+                <TweetCard item={tweet.tweet} />
                 <Divider sx={{ margin: "2rem 0rem" }}
                 />
             </section>
 
             <section>
-                {[1, 1, 1,].map((item) => <TweetCard />)}
+                { tweet.tweet?.replyTweets.map ((item) => <TweetCard item={item} />)}
+                {/* {tweet.tweet && tweet.tweet.replyTweet && tweet.tweet.replyTweet.length > 0 ? (
+        tweet.tweet.replyTweets.map((item) => <TweetCard key={item.id} item={item} />)
+    ) : (
+        <p>No replies yet.</p> // Fallback in case there are no replies
+    )} */}
+           
+
+
             </section>
 
         </React.Fragment>

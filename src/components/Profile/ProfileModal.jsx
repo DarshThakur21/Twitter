@@ -9,6 +9,11 @@ import { Avatar, IconButton, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Navigate, useNavigate } from 'react-router-dom';
 import './ProfileModal.css'
+import { useDispatch } from 'react-redux';
+import { updateUserProfile } from '../../Store/Auth/Action';
+import { UploadToCloud } from '../../Util/UploadToCloud';
+import { useSelector } from 'react-redux';
+import { Store } from '../../Store/Store';
 
 const style = {
     position: 'absolute',
@@ -29,21 +34,30 @@ export default function ProfileModal({open,handleClose}) {
     // const [open, setOpen] = React.useState(false);
     const [uploading, setUploading] = React.useState(false)
     const navigate = useNavigate();
+    const dispatch=useDispatch();
+    const [selectedImage,setselectedImage]=React.useState("")
+    const {auth}=useSelector((Store)=>Store)
 
+    console.log("auth",auth)
 
 
 
 
 
     const handleSubmit = (values) => {
+        dispatch(updateUserProfile(values))
+
         console.log("handleSubmit",values   )
+        handleClose()
+
     }
 
-    const handleImageChange = (event) => {
+    const handleImageChange = async (event) => {
         setUploading(true);
         const { name } = event.target
-        const file = event.target.files[0];
+        const file =  await UploadToCloud((event.target.files[0]))
         formik.setFieldValue(name, file);
+        setselectedImage(file);
         setUploading(false);
 
 
@@ -104,7 +118,7 @@ export default function ProfileModal({open,handleClose}) {
                                         <img
                                             className='w-full h-[12rem] object-cover object-center'
 
-                                            src="https://i.pinimg.com/564x/ec/d0/19/ecd019cb60258acf2728fd0739bd803f.jpg"
+                                            src="https://i.pinimg.com/736x/0c/96/7c/0c967c4af27aa805391e3be495936acd.jpg"
                                             alt="" />
                                         <input type="file"
                                             className='absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer'
@@ -123,7 +137,7 @@ export default function ProfileModal({open,handleClose}) {
                                     <div className='relative'>
                                         <Avatar
                                             sx={{ width: "10rem", height: "10rem", border: "4px solid white" }}
-                                            src='https://i.pinimg.com/736x/a1/40/66/a140663008ce810bf89a407b049096d1.jpg' />
+                                            src={selectedImage || auth.user?.image } />
                                              <input type="file"
                                             className='absolute top-0 left-0 w-[10rem] h-full opacity-0 cursor-pointer'
                                             onChange={handleImageChange}
